@@ -1,0 +1,7 @@
+.card {
+  background-color: var(--white);
+  width: 100%;
+  border-radius: 5px;
+  padding: 14px;
+  box-shadow: 0 12px 56px 0 rgba(0, 0, 0, 0.08), 0 0 3px 0 var(--custom-outline);
+}
