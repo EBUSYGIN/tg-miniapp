@@ -1,3 +1,9 @@
 :root {
+  --black: #000;
   --white: #fff;
+  --background-white: #f8f9fb;
+  --primary: #007aff;
+  --custom-outline: rgba(0, 0, 0, 0.05);
+  --custom-secondary-hint-color: #a2acb0;
+  --native-destructive-text-color: #e53935;
 }
