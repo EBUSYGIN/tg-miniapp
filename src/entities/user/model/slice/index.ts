@@ -29,6 +29,10 @@ export const userSlice = createSlice({
         isRegistered: true,
         profile: { ...action.payload },
       });
+
+      // state.loadingState = 'success';
+      // state.isRegistered = true;
+      // state.profile = { ...action.payload };
     });
 
     builder.addCase(getUserById.rejected, (state) => {

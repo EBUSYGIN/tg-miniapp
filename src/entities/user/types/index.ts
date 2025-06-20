@@ -1,10 +1,12 @@
+import { ITask } from '../../task/types';
+
 export interface IUser {
   userId: string;
   name: string;
   rang: string;
   is_active: boolean;
   is_admin: boolean;
-  tasks: string[];
+  tasks: ITask[];
 }
 
 export interface IUserState {
