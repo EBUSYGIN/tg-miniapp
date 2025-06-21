@@ -3,5 +3,5 @@ export interface ButtonProps
     React.ButtonHTMLAttributes<HTMLButtonElement>,
     HTMLButtonElement
   > {
-  appearance?: 'primary';
+  appearance?: 'primary' | 'none';
 }

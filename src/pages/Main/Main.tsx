@@ -1,3 +1,9 @@
+import { Tasks } from '../../widgets';
+
 export function Main() {
-  return <div>Main</div>;
+  return (
+    <div>
+      <Tasks />
+    </div>
+  );
 }

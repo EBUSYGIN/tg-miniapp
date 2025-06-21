@@ -13,7 +13,7 @@ export const getUserId = () => {
 
   try {
     const userData = JSON.parse(decodeURIComponent(userParam));
-    return userData.id;
+    return userData.id.toString();
   } catch (e) {
     console.log(e);
     return null;

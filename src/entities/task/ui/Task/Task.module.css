@@ -1,0 +1,5 @@
+.task {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--custom-secondary-hint-color);
+}

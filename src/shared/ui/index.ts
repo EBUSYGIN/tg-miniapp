@@ -1,3 +1,4 @@
+export * from './Icon/Icon';
 export * from './Tag/Tag';
 export * from './Card/Card';
 export * from './Title/Title';
