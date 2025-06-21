@@ -3,3 +3,154 @@
   justify-content: space-between;
   border-bottom: 1px solid var(--custom-secondary-hint-color);
 }
+
+.taskCard {
+  padding: 16px;
+  border-radius: 12px;
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+  transition: box-shadow 0.2s ease;
+}
+
+.taskCard:hover {
+  box-shadow: var(--shadow-light);
+}
+
+.taskHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  gap: 12px;
+}
+
+.taskInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.taskTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.taskMeta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.priorityTag {
+  font-size: 12px;
+  font-weight: 500;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: none;
+}
+
+.deadline {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.statusButton {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.statusButton:hover {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.statusButton.inWork {
+  background-color: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.executors {
+  margin-bottom: 12px;
+}
+
+.executorsTitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin: 0 0 8px 0;
+}
+
+.executorsList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.executor {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+}
+
+.executorName {
+  font-size: 14px;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.inWorkBadge {
+  font-size: 12px;
+  color: var(--primary-color);
+  font-weight: 500;
+  background-color: var(--primary-light);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* Мобильные адаптации */
+@media (max-width: 480px) {
+  .taskCard {
+    padding: 12px;
+  }
+
+  .taskTitle {
+    font-size: 15px;
+  }
+
+  .taskMeta {
+    gap: 8px;
+  }
+
+  .statusButton {
+    width: 36px;
+    height: 36px;
+  }
+
+  .executor {
+    padding: 6px 10px;
+  }
+
+  .executorName {
+    font-size: 13px;
+  }
+}

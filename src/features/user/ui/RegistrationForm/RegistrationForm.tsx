@@ -4,7 +4,7 @@ import { IUserRegistrationForm } from '../../../../entities/user/types';
 import { userHandler } from '../../../../entities/user/handler';
 import { useState } from 'react';
 import { RootState } from '../../../../app/store/store';
-import { Button, Card, Input, Title } from '../../../../shared/ui';
+import { Button, Card, Input } from '../../../../shared/ui';
 
 import styles from './RegistrationForm.module.css';
 
@@ -14,7 +14,7 @@ export function RegistrationForm() {
     register,
     setError,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<IUserRegistrationForm>();
   const [isSubmitSuccessful, setIsSubmitSuccessful] = useState<null | boolean>(
     null
@@ -32,7 +32,7 @@ export function RegistrationForm() {
       setIsSubmitSuccessful(true);
     } else {
       setIsSubmitSuccessful(false);
-      setError('rang', { message: 'Что то пошло не так, попытайтесь позже' });
+      setError('rang', { message: 'Что-то пошло не так, попробуйте позже' });
     }
   };
 
@@ -40,28 +40,60 @@ export function RegistrationForm() {
     <Card>
       {isSubmitSuccessful === true ? (
         <div className={styles.successPlate}>
-          ✅ Ваши данные отправлены, ожидайте ответа администрации
+          <div className={styles.successIcon}>✓</div>
+          <h2 className={styles.successTitle}>Заявка отправлена!</h2>
+          <p className={styles.successText}>
+            Ваши данные отправлены администрации. Ожидайте ответа в ближайшее
+            время.
+          </p>
         </div>
       ) : (
         <form className={styles.form} onSubmit={handleSubmit(registerUser)}>
-          <Title tag='h1'>Регистрация</Title>
-          <Input
-            placeholder='Имя:'
-            label='Ваше имя'
-            {...register('name', {
-              required: 'Поле обязательно для заполнения',
-            })}
-            error={errors.name?.message}
-          />
-          <Input
-            placeholder='Должность:'
-            label='Ваша должность'
-            {...register('rang', {
-              required: 'Поле обязательно для заполнения',
-            })}
-            error={errors.rang?.message}
-          />
-          <Button>Зарегистрироваться</Button>
+          <div>
+            <h1 className={styles.title}>Регистрация</h1>
+            <p className={styles.subtitle}>
+              Заполните форму для получения доступа к системе управления
+              задачами
+            </p>
+          </div>
+
+          <div className={styles.inputGroup}>
+            <Input
+              placeholder='Введите ваше имя'
+              label='Имя'
+              {...register('name', {
+                required: 'Поле обязательно для заполнения',
+                minLength: {
+                  value: 2,
+                  message: 'Имя должно содержать минимум 2 символа',
+                },
+              })}
+              error={errors.name?.message}
+            />
+          </div>
+
+          <div className={styles.inputGroup}>
+            <Input
+              placeholder='Введите вашу должность'
+              label='Должность'
+              {...register('rang', {
+                required: 'Поле обязательно для заполнения',
+                minLength: {
+                  value: 2,
+                  message: 'Должность должна содержать минимум 2 символа',
+                },
+              })}
+              error={errors.rang?.message}
+            />
+          </div>
+
+          <Button
+            type='submit'
+            className={styles.button}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? 'Отправка...' : 'Зарегистрироваться'}
+          </Button>
         </form>
       )}
     </Card>

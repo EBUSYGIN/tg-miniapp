@@ -33,6 +33,36 @@ const getUserById = async (id: string) => {
   }
 };
 
+const getAllUsers = async (): Promise<ApiResponse<IUser[]>> => {
+  try {
+    const response = await axios.get<IUser[]>(userApi.getAllUsers());
+    return {
+      success: true,
+      data: response.data,
+      status: response.status,
+    };
+  } catch (e) {
+    if (axios.isAxiosError(e)) {
+      return {
+        success: false,
+        error: {
+          message: e.response?.data?.message || e.message,
+          status: e.response?.status,
+          details: e.response?.data,
+        },
+      };
+    }
+
+    return {
+      success: false,
+      error: {
+        message: 'Неизвестная ошибка',
+        details: e,
+      },
+    };
+  }
+};
+
 const createUser = async (
   userData: IUserCreate
 ): Promise<ApiResponse<IUser>> => {
@@ -68,5 +98,6 @@ const createUser = async (
 
 export const userHandler = {
   getUserById,
+  getAllUsers,
   createUser,
 };

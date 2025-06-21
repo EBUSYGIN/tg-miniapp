@@ -1,6 +1,6 @@
-import { createBrowserRouter } from 'react-router';
+import { createBrowserRouter, Navigate } from 'react-router';
 import { LayoutProvider } from '../Providers/LayoutProvider/LayoutProvider';
-import { Main, Register } from '../../pages';
+import { Admin, CreateTask, Main, Register } from '../../pages';
 
 export const router = createBrowserRouter([
   {
@@ -8,12 +8,24 @@ export const router = createBrowserRouter([
     element: <LayoutProvider />,
     children: [
       {
+        index: true,
+        element: <Navigate to='/register' replace />,
+      },
+      {
         path: '/register',
         element: <Register />,
       },
       {
         path: '/main',
         element: <Main />,
+      },
+      {
+        path: '/admin',
+        element: <Admin />,
+      },
+      {
+        path: '/add-task',
+        element: <CreateTask />,
       },
     ],
   },

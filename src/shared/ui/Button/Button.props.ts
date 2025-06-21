@@ -4,4 +4,5 @@ export interface ButtonProps
     HTMLButtonElement
   > {
   appearance?: 'primary' | 'none';
+  size?: 's' | 'm';
 }

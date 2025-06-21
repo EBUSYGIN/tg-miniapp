@@ -7,11 +7,12 @@ export function Button({
   appearance = 'primary',
   className,
   children,
+  size = 'm',
   ...props
 }: ButtonProps) {
   return (
     <button
-      className={cn(styles.button, styles[appearance], className)}
+      className={cn(styles.button, styles[size], styles[appearance], className)}
       {...props}
     >
       {children}

@@ -1,9 +1,33 @@
 :root {
-  --black: #000;
-  --white: #fff;
-  --background-white: #f8f9fb;
-  --primary: #007aff;
+  /* Telegram-style colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #f1f2f3;
+  --bg-elevated: #ffffff;
+
+  --text-primary: #000000;
+  --text-secondary: #707579;
+  --text-tertiary: #999999;
+
+  --border-color: #e3e5e7;
+  --border-light: #f1f2f3;
+
+  --primary-color: #2481cc;
+  --primary-light: #e8f4fd;
+
+  --success-color: #4caf50;
+  --warning-color: #ff9800;
+  --error-color: #f44336;
+
+  --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+  /* Legacy colors for compatibility */
+  --black: #000000;
+  --white: #ffffff;
+  --background-white: #f8f9fa;
+  --primary: #2481cc;
   --custom-outline: rgba(0, 0, 0, 0.05);
-  --custom-secondary-hint-color: #a2acb0;
-  --native-destructive-text-color: #e53935;
+  --custom-secondary-hint-color: #707579;
+  --native-destructive-text-color: #f44336;
 }

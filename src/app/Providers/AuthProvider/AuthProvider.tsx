@@ -5,9 +5,7 @@ import { useEffect } from 'react';
 import { getUserById } from '../../../entities/user/model/asyncActions';
 
 export function AuthProvider() {
-  const isRegistered = useSelector(
-    (state: RootState) => state.user.isRegistered
-  );
+  const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
@@ -16,14 +14,20 @@ export function AuthProvider() {
   }, []);
 
   useEffect(() => {
-    if (isRegistered === null) return;
+    if (user.isRegistered === null) return;
 
-    if (isRegistered === true) {
-      navigate('/main');
+    if (user.isRegistered === true) {
+      if (user.profile?.is_admin) {
+        navigate('/admin');
+      } else {
+        navigate('/main');
+      }
     } else {
       navigate('/register');
     }
-  }, [isRegistered]);
+  }, [user, navigate]);
+
+  console.log(user);
 
   return (
     <>

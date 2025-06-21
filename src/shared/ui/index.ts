@@ -4,3 +4,7 @@ export * from './Card/Card';
 export * from './Title/Title';
 export * from './Input/Input';
 export * from './Button/Button';
+export * from './Textarea/Textarea';
+export * from './Select/Select';
+export * from './DatePicker/DatePicker';
+export * from './MultiSelect/MultiSelect';

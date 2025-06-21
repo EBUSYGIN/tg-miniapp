@@ -1,7 +1,7 @@
 import { ITask } from '../../task/types';
 
 export interface IUser {
-  userId: string;
+  user_id: string;
   name: string;
   rang: string;
   is_active: boolean;
