@@ -1,43 +1,40 @@
-import { useSelector } from 'react-redux';
-import { RootState } from '../../app/store/store';
+import { useEffect, useState } from 'react';
 import { Card, Title, Tag } from '../../shared/ui';
 import styles from './ArchiveTasks.module.css';
+import { ITask } from '@/entities/task/types';
+import { taskHandler } from '@/entities/task/handler';
 
 export function ArchiveTasks() {
-  const { profile } = useSelector((state: RootState) => state.user);
+  const [archivedTasks, setArchivedTasks] = useState<ITask[] | null>(null);
 
-  // Фильтруем завершенные задачи
-  const archivedTasks =
-    profile?.tasks?.filter((task) =>
-      task.executors.some((executor) => executor.is_complete)
-    ) || [];
+  useEffect(() => {
+    const getArchivedTasks = async () => {
+      try {
+        const data = await taskHandler.getArchiveTasks();
+        if (data.success) {
+          setArchivedTasks(data.data);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
 
-  const getPriorityColor = (priority: number) => {
-    switch (priority) {
-      case 3:
-        return '#ef4444'; // красный - высокий
-      case 2:
-        return '#f59e0b'; // желтый - средний
-      case 1:
-        return '#10b981'; // зеленый - низкий
+    getArchivedTasks();
+  }, []);
+
+  const getPriorityColor = (priority: string) => {
+    const normalizedPriority = priority.trim().toLowerCase();
+    switch (normalizedPriority) {
+      case 'высокий':
+        return '#ef4444';
+      case 'средний':
+        return '#f59e0b';
+      case 'низкий':
+        return '#10b981';
       default:
         return '#6b7280';
     }
   };
-
-  const getPriorityLabel = (priority: number) => {
-    switch (priority) {
-      case 3:
-        return 'Высокий';
-      case 2:
-        return 'Средний';
-      case 1:
-        return 'Низкий';
-      default:
-        return 'Неизвестно';
-    }
-  };
-
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('ru-RU', {
       day: '2-digit',
@@ -46,7 +43,7 @@ export function ArchiveTasks() {
     });
   };
 
-  if (archivedTasks.length === 0) {
+  if (!archivedTasks) {
     return (
       <div className={styles.emptyState}>
         <div className={styles.emptyIcon}>📋</div>
@@ -81,7 +78,7 @@ export function ArchiveTasks() {
                     className={styles.priorityTag}
                     style={{ backgroundColor: getPriorityColor(task.priority) }}
                   >
-                    {getPriorityLabel(task.priority)}
+                    {task.priority}
                   </Tag>
                   <span className={styles.deadline}>
                     Дедлайн: {formatDate(task.deadline)}

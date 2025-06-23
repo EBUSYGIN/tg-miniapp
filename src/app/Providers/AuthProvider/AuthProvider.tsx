@@ -27,8 +27,6 @@ export function AuthProvider() {
     }
   }, [user, navigate]);
 
-  console.log(user);
-
   return (
     <>
       <Outlet />

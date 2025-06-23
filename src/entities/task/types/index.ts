@@ -1,7 +1,7 @@
 export interface ITask {
   id: string;
   task: string;
-  priority: number; // 1 - низкий, 2 - средний, 3 - высокий
+  priority: string;
   deadline: string;
   reminders: IReminder[];
   created_at: string;

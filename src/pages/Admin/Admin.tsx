@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Title } from '../../shared/ui';
-import { Tasks, ArchiveTasks } from '../../widgets';
+import { ArchiveTasks, AdminTasks } from '../../widgets';
 import styles from './Admin.module.css';
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/react';
 
@@ -43,7 +43,7 @@ export function Admin() {
 
         <TabPanels className={styles.tabPanels}>
           <TabPanel className={styles.tabPanel}>
-            <Tasks />
+            <AdminTasks />
           </TabPanel>
           <TabPanel className={styles.tabPanel}>
             <ArchiveTasks />

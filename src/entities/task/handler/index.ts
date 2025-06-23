@@ -95,6 +95,36 @@ const getTasks = async (): Promise<ApiResponse<ITask[]>> => {
   }
 };
 
+const getArchiveTasks = async (): Promise<ApiResponse<ITask[]>> => {
+  try {
+    const response = await axios.get<ITask[]>(taskApi.getArchivedTasks());
+    return {
+      success: true,
+      data: response.data,
+      status: response.status,
+    };
+  } catch (e) {
+    if (axios.isAxiosError(e)) {
+      return {
+        success: false,
+        error: {
+          message: e.response?.data?.message || e.message,
+          status: e.response?.status,
+          details: e.response?.data,
+        },
+      };
+    }
+
+    return {
+      success: false,
+      error: {
+        message: 'Неизвестная ошибка',
+        details: e,
+      },
+    };
+  }
+};
+
 const getTask = async (id: string): Promise<ApiResponse<ITask>> => {
   try {
     const response = await axios.get<ITask>(taskApi.getTask(id));
@@ -130,4 +160,5 @@ export const taskHandler = {
   createTask,
   getTasks,
   getTask,
+  getArchiveTasks,
 };

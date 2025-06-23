@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { useLocation, Link } from 'react-router';
 import { RootState } from '../../app/store/store';
 import styles from './Header.module.css';
-import { Tag, Title, Button } from '../../shared/ui';
+import { Tag, Title } from '../../shared/ui';
 
 export function Header() {
   const { userImage, profile } = useSelector((state: RootState) => state.user);

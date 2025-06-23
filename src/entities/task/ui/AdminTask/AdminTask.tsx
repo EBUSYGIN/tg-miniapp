@@ -1,13 +1,19 @@
-import { Button, Icon, Tag, Card } from '../../../../shared/ui';
-import { TaskProps } from './Task.props';
-import styles from './Task.module.css';
+import { Button, Icon, Title, Tag, Card } from '../../../../shared/ui';
+import { TaskProps } from './AdminTask.props';
+import styles from './AdminTask.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../../app/store/store';
 import { taskHandler } from '../../handler';
 import { getUserById } from '../../../user/model/asyncActions';
 import { parse } from 'date-fns';
 
-export function Task({ task, deadline, executors, id, priority }: TaskProps) {
+export function AdminTask({
+  task,
+  deadline,
+  executors,
+  id,
+  priority,
+}: TaskProps) {
   const date = new Intl.DateTimeFormat('ru-RU', {
     day: '2-digit',
     month: '2-digit',
@@ -45,7 +51,9 @@ export function Task({ task, deadline, executors, id, priority }: TaskProps) {
     <Card className={styles.taskCard}>
       <div className={styles.taskHeader}>
         <div className={styles.taskInfo}>
-          <div className={styles.taskTitle}>{task} </div>
+          <Title tag='h3' className={styles.taskTitle}>
+            {task}
+          </Title>
           <div className={styles.taskMeta}>
             <Tag
               className={styles.priorityTag}
@@ -64,6 +72,22 @@ export function Task({ task, deadline, executors, id, priority }: TaskProps) {
         >
           {inWork ? <Icon.Checkmark /> : <Icon.Checkminus />}
         </Button>
+      </div>
+
+      <div className={styles.executors}>
+        <h4 className={styles.executorsTitle}>Исполнители:</h4>
+        <div className={styles.executorsList}>
+          {executors.map((executor) => (
+            <div key={executor.id} className={styles.executor}>
+              <span className={styles.executorName}>
+                {executor.executor_name}
+              </span>
+              {executor.in_work && (
+                <span className={styles.inWorkBadge}>В работе</span>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
     </Card>
   );
