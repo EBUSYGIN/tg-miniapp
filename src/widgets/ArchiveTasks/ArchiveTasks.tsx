@@ -43,7 +43,7 @@ export function ArchiveTasks() {
     });
   };
 
-  if (!archivedTasks) {
+  if (!archivedTasks || archivedTasks.length < 1) {
     return (
       <div className={styles.emptyState}>
         <div className={styles.emptyIcon}>📋</div>

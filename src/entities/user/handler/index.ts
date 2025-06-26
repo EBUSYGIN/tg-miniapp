@@ -96,8 +96,70 @@ const createUser = async (
   }
 };
 
+const getUserApplications = async (): Promise<ApiResponse<IUser[]>> => {
+  try {
+    const response = await axios.get(userApi.getUserApplications());
+    return {
+      success: true,
+      data: response.data,
+      status: response.status,
+    };
+  } catch (e) {
+    if (axios.isAxiosError(e)) {
+      return {
+        success: false,
+        error: {
+          message: e.response?.data.message || e.message,
+          status: e.response?.status,
+          details: e.response?.data,
+        },
+      };
+    }
+    return {
+      success: false,
+      error: {
+        message: 'Неизвестная ошибка',
+        details: e,
+      },
+    };
+  }
+};
+
+const approveUser = async (userId: string): Promise<ApiResponse<IUser>> => {
+  try {
+    const response = await axios.post(userApi.approveUser(userId));
+    return {
+      success: true,
+      data: response.data,
+      status: response.status,
+    };
+  } catch (e) {
+    if (axios.isAxiosError(e)) {
+      return {
+        success: false,
+        error: {
+          message: e.response?.data?.message || e.message,
+          status: e.response?.status,
+          details: e.response?.data,
+        },
+      };
+    }
+
+    // Для непредвиденных ошибок (не Axios)
+    return {
+      success: false,
+      error: {
+        message: 'Неизвестная ошибка',
+        details: e,
+      },
+    };
+  }
+};
+
 export const userHandler = {
   getUserById,
   getAllUsers,
   createUser,
+  getUserApplications,
+  approveUser,
 };

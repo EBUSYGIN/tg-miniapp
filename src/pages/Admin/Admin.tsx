@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Title } from '../../shared/ui';
-import { ArchiveTasks, AdminTasks } from '../../widgets';
+import { ArchiveTasks, AdminTasks, UserApprovalList } from '../../widgets';
 import styles from './Admin.module.css';
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/react';
 
@@ -39,6 +39,18 @@ export function Admin() {
               </div>
             )}
           </Tab>
+
+          <Tab className={styles.tab}>
+            {({ selected }) => (
+              <div
+                className={`${styles.tabButton} ${
+                  selected ? styles.activeTab : ''
+                }`}
+              >
+                Пользователи
+              </div>
+            )}
+          </Tab>
         </TabList>
 
         <TabPanels className={styles.tabPanels}>
@@ -47,6 +59,9 @@ export function Admin() {
           </TabPanel>
           <TabPanel className={styles.tabPanel}>
             <ArchiveTasks />
+          </TabPanel>
+          <TabPanel className={styles.tabPanel}>
+            <UserApprovalList />
           </TabPanel>
         </TabPanels>
       </TabGroup>
