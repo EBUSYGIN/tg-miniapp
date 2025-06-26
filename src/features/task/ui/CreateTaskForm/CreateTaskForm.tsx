@@ -9,11 +9,7 @@ import {
   Title,
   MultiSelect,
 } from '../../../../shared/ui';
-import {
-  ICreateTaskForm,
-  SelectOption,
-  ICreateTaskRequest,
-} from '../../../../entities/task/types';
+import { ICreateTaskForm, SelectOption } from '../../../../entities/task/types';
 import { IUser } from '../../../../entities/user/types';
 import { userHandler } from '../../../../entities/user/handler';
 import { taskHandler } from '../../../../entities/task/handler';
