@@ -7,19 +7,24 @@ export function DatePicker({
   selectedDates,
   onDateChange,
   placeholder,
+  single = false,
   ...props
 }: DatePickerProps) {
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const date = e.target.value;
-    if (date) {
-      onDateChange(date);
+    if (!date) return;
+    if (single) {
+      onDateChange([date]);
+    } else {
+      if (!selectedDates.includes(date)) {
+        onDateChange([...selectedDates, date]);
+      }
     }
   };
 
   const removeDate = (dateToRemove: string) => {
     const newDates = selectedDates.filter((date) => date !== dateToRemove);
-    // Обновляем все даты, кроме удаляемой
-    newDates.forEach((date) => onDateChange(date));
+    onDateChange(newDates);
   };
 
   return (
@@ -31,6 +36,9 @@ export function DatePicker({
         onChange={handleDateChange}
         placeholder={placeholder}
         {...props}
+        value={
+          single && selectedDates.length > 0 ? selectedDates[0] : undefined
+        }
       />
       {selectedDates.length > 0 && (
         <div className={styles.selectedDates}>

@@ -34,7 +34,7 @@ export interface ICreateTaskForm {
 
 export interface ICreateTaskRequest {
   task: string;
-  priority: number; // 1 - низкий, 2 - средний, 3 - высокий
+  priority: number;
   deadline: string;
   executors: Array<{ executor: string }>;
   reminders: Array<{ remind_at: string }>;

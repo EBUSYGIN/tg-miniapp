@@ -26,7 +26,7 @@ const priorityOptions: SelectOption[] = [
 ];
 
 export function CreateTaskForm() {
-  const [deadlineDates, setDeadlineDates] = useState<string[]>([]);
+  const [deadline, setDeadline] = useState<string>('');
   const [reminderDates, setReminderDates] = useState<string[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [users, setUsers] = useState<IUser[]>([]);
@@ -60,22 +60,15 @@ export function CreateTaskForm() {
     loadUsers();
   }, []);
 
-  const handleDeadlineChange = (date: string) => {
-    const newDates = deadlineDates.includes(date)
-      ? deadlineDates.filter((d) => d !== date)
-      : [...deadlineDates, date];
-
-    setDeadlineDates(newDates);
-    setValue('deadline', newDates);
+  const handleDeadlineChange = (dates: string[]) => {
+    const date = dates[0] || '';
+    setDeadline(date);
+    setValue('deadline', date ? [date] : []);
   };
 
-  const handleReminderChange = (date: string) => {
-    const newDates = reminderDates.includes(date)
-      ? reminderDates.filter((d) => d !== date)
-      : [...reminderDates, date];
-
-    setReminderDates(newDates);
-    setValue('reminders', newDates);
+  const handleReminderChange = (dates: string[]) => {
+    setReminderDates(dates);
+    setValue('reminders', dates);
   };
 
   const validateForm = (data: ICreateTaskForm): boolean => {
@@ -89,14 +82,6 @@ export function CreateTaskForm() {
       newErrors.priority = 'Выберите приоритет';
     }
 
-    if (deadlineDates.length === 0) {
-      newErrors.deadline = 'Выберите хотя бы одну дату дедлайна';
-    }
-
-    if (reminderDates.length === 0) {
-      newErrors.reminders = 'Выберите хотя бы одну дату напоминания';
-    }
-
     if (!data.executors || data.executors.length === 0) {
       newErrors.executors = 'Выберите хотя бы одного исполнителя';
     }
@@ -108,11 +93,11 @@ export function CreateTaskForm() {
   const convertPriorityToNumber = (priority: string): number => {
     switch (priority) {
       case 'high':
-        return 3;
+        return 1; // высокий
       case 'medium':
-        return 2;
+        return 2; // средний
       case 'low':
-        return 1;
+        return 3; // низкий
       default:
         return 2;
     }
@@ -126,33 +111,30 @@ export function CreateTaskForm() {
     setIsSubmitting(true);
 
     try {
-      // Преобразуем данные формы в формат API
-      const taskRequest: ICreateTaskRequest = {
+      const taskRequest = {
         task: data.task,
         priority: convertPriorityToNumber(data.priority),
-        deadline: deadlineDates[0], // Берем первую дату как основную
+        deadline: deadline || '',
         executors: data.executors.map((executorId) => ({
           executor: executorId,
         })),
-        reminders: reminderDates.map((date) => ({ remind_at: date })),
+        reminders:
+          reminderDates.length > 0
+            ? reminderDates.map((date) => ({ remind_at: date }))
+            : [],
       };
 
       const response = await taskHandler.createTask(taskRequest);
 
       if (response.success) {
-        console.log('Задача успешно создана:', response.data);
-        // Очищаем форму
         reset();
-        setDeadlineDates([]);
+        setDeadline('');
         setReminderDates([]);
         setErrors({});
-        // Здесь можно добавить уведомление об успехе
       } else {
-        console.error('Ошибка создания задачи:', response.error);
         setErrors({ submit: response.error.message });
       }
     } catch (error) {
-      console.error('Неожиданная ошибка:', error);
       setErrors({ submit: 'Произошла неожиданная ошибка' });
     } finally {
       setIsSubmitting(false);
@@ -228,9 +210,10 @@ export function CreateTaskForm() {
           render={({}) => (
             <DatePicker
               label='Дедлайн'
-              selectedDates={deadlineDates}
+              selectedDates={deadline ? [deadline] : []}
               onDateChange={handleDeadlineChange}
               error={errors.deadline}
+              single
             />
           )}
         />

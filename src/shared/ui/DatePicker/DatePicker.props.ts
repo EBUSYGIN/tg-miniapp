@@ -8,5 +8,6 @@ export interface DatePickerProps
   error?: string;
   label?: string;
   selectedDates: string[];
-  onDateChange: (date: string) => void;
+  onDateChange: (dates: string[]) => void;
+  single?: boolean;
 }
