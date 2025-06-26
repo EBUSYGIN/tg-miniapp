@@ -1,4 +1,4 @@
-import { Button, Icon, Title, Tag, Card } from '../../../../shared/ui';
+import { Icon, Title, Tag, Card } from '../../../../shared/ui';
 import { TaskProps } from './AdminTask.props';
 import styles from './AdminTask.module.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -51,9 +51,7 @@ export function AdminTask({
     <Card className={styles.taskCard}>
       <div className={styles.taskHeader}>
         <div className={styles.taskInfo}>
-          <Title tag='h3' className={styles.taskTitle}>
-            {task}
-          </Title>
+          <div className={styles.taskTitle}>{task} </div>
           <div className={styles.taskMeta}>
             <Tag
               className={styles.priorityTag}
@@ -65,13 +63,12 @@ export function AdminTask({
           </div>
         </div>
 
-        <Button
-          appearance='none'
+        <div
           onClick={getInWork}
           className={`${styles.statusButton} ${inWork ? styles.inWork : ''}`}
         >
           {inWork ? <Icon.Checkmark /> : <Icon.Checkminus />}
-        </Button>
+        </div>
       </div>
 
       <div className={styles.executors}>

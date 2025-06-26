@@ -38,6 +38,11 @@
   color: var(--text-primary);
   margin: 0;
   line-height: 1.4;
+
+  text-align: justify; /* Выравнивание по ширине */
+  text-justify: inter-word; /* Лучший вариант для выравнивания слов */
+  hyphens: auto; /* Перенос слов при необходимости */
+  word-break: break-all;
 }
 
 .taskMeta {
