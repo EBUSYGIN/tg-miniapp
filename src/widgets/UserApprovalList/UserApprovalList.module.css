@@ -1,0 +1,180 @@
+.container {
+  padding: 16px;
+  background-color: var(--bg-primary);
+  min-height: 100%;
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.tasksList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.taskCard {
+  padding: 16px;
+  border-radius: 12px;
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+  transition: box-shadow 0.2s ease;
+}
+
+.taskHeader {
+  margin-bottom: 12px;
+}
+
+.taskInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.taskTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.taskMeta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.priorityTag {
+  font-size: 12px;
+  font-weight: 500;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: none;
+}
+
+.deadline {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.executors {
+  margin-bottom: 12px;
+}
+
+.executorsTitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin: 0 0 8px 0;
+}
+
+.executorsList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.executor {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+}
+
+.executorName {
+  font-size: 14px;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.completedBadge {
+  font-size: 12px;
+  color: var(--success-color);
+  font-weight: 500;
+  background-color: rgba(76, 175, 80, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.taskFooter {
+  border-top: 1px solid var(--border-light);
+  padding-top: 12px;
+}
+
+.createdAt {
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.emptyIcon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.emptyTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 8px 0;
+}
+
+.emptyText {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Мобильные адаптации */
+@media (max-width: 480px) {
+  .container {
+    padding: 12px;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+
+  .taskCard {
+    padding: 12px;
+  }
+
+  .taskTitle {
+    font-size: 15px;
+  }
+
+  .taskMeta {
+    gap: 8px;
+  }
+
+  .executor {
+    padding: 6px 10px;
+  }
+
+  .executorName {
+    font-size: 13px;
+  }
+}

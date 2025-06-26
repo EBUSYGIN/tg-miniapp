@@ -23,7 +23,7 @@ export function AdminTasks() {
     getTasks();
   }, []);
 
-  if (!adminTasks) {
+  if (!adminTasks || adminTasks.length < 1) {
     return (
       <div className={styles.emptyState}>
         <div className={styles.emptyIcon}>📝</div>
