@@ -1,4 +1,5 @@
 import { retrieveRawInitData } from '@telegram-apps/sdk';
+export { retrieveRawInitData };
 
 export const getUserId = () => {
   const rawData = retrieveRawInitData();

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { api } from '../../../shared/config/api';
 import { taskApi } from '../api';
 import type { ITask, ICreateTaskRequest } from '../types';
 
@@ -24,7 +24,7 @@ type ApiResponse<T> = SuccessResponse<T> | ErrorResponse;
 
 const getInWork = async (userId: string, taskId: string) => {
   try {
-    const { data } = await axios.post(taskApi.getInWork(taskId), {
+    const { data } = await api.post(taskApi.getInWork(taskId), {
       executor_id: userId,
     });
     return data;
@@ -37,18 +37,20 @@ const createTask = async (
   taskData: ICreateTaskRequest
 ): Promise<ApiResponse<ITask>> => {
   try {
-    const response = await axios.post(taskApi.createTask(), taskData);
+    const response = await api.post(taskApi.createTask(), taskData);
     return {
       success: true,
       data: response.data,
       status: response.status,
     };
-  } catch (e) {
-    if (axios.isAxiosError(e)) {
+  } catch (e: unknown) {
+    // @ts-expect-error: isAxiosError is not a method on AxiosInstance, use Axios static
+    if (e && typeof e === 'object' && api.defaults && (e as any).isAxiosError) {
+      const err = e as any;
       return {
         success: false,
         error: {
-          message: e.response?.data?.message || e.message,
+          message: err.response?.data?.message || err.message,
           status: e.response?.status,
           details: e.response?.data,
         },
@@ -67,14 +69,14 @@ const createTask = async (
 
 const getTasks = async (): Promise<ApiResponse<ITask[]>> => {
   try {
-    const response = await axios.get<ITask[]>(taskApi.getTasks());
+    const response = await api.get<ITask[]>(taskApi.getTasks());
     return {
       success: true,
       data: response.data,
       status: response.status,
     };
   } catch (e) {
-    if (axios.isAxiosError(e)) {
+    if (api.isAxiosError(e)) {
       return {
         success: false,
         error: {
@@ -97,14 +99,14 @@ const getTasks = async (): Promise<ApiResponse<ITask[]>> => {
 
 const getArchiveTasks = async (): Promise<ApiResponse<ITask[]>> => {
   try {
-    const response = await axios.get<ITask[]>(taskApi.getArchivedTasks());
+    const response = await api.get<ITask[]>(taskApi.getArchivedTasks());
     return {
       success: true,
       data: response.data,
       status: response.status,
     };
   } catch (e) {
-    if (axios.isAxiosError(e)) {
+    if (api.isAxiosError(e)) {
       return {
         success: false,
         error: {
@@ -127,14 +129,14 @@ const getArchiveTasks = async (): Promise<ApiResponse<ITask[]>> => {
 
 const getTask = async (id: string): Promise<ApiResponse<ITask>> => {
   try {
-    const response = await axios.get<ITask>(taskApi.getTask(id));
+    const response = await api.get<ITask>(taskApi.getTask(id));
     return {
       success: true,
       data: response.data,
       status: response.status,
     };
   } catch (e) {
-    if (axios.isAxiosError(e)) {
+    if (api.isAxiosError(e)) {
       return {
         success: false,
         error: {

@@ -1,6 +1,7 @@
-import axios from 'axios';
+import { api } from '../../../shared/config/api';
 import { userApi } from '../api';
 import type { IUser, IUserCreate } from '../types';
+import axios from 'axios';
 
 // Тип для успешного ответа
 type SuccessResponse<T> = {
@@ -24,7 +25,7 @@ type ApiResponse<T> = SuccessResponse<T> | ErrorResponse;
 
 const getUserById = async (id: string) => {
   try {
-    const { data } = await axios.get<IUser>(userApi.getUser(id));
+    const { data } = await api.get<IUser>(userApi.getUser(id));
     return data;
   } catch (e) {
     console.log('Error fetching user');
@@ -35,13 +36,13 @@ const getUserById = async (id: string) => {
 
 const getAllUsers = async (): Promise<ApiResponse<IUser[]>> => {
   try {
-    const response = await axios.get<IUser[]>(userApi.getAllUsers());
+    const response = await api.get<IUser[]>(userApi.getAllUsers());
     return {
       success: true,
       data: response.data,
       status: response.status,
     };
-  } catch (e) {
+  } catch (e: unknown) {
     if (axios.isAxiosError(e)) {
       return {
         success: false,
@@ -67,13 +68,13 @@ const createUser = async (
   userData: IUserCreate
 ): Promise<ApiResponse<IUser>> => {
   try {
-    const response = await axios.post(userApi.createUser(), userData);
+    const response = await api.post(userApi.createUser(), userData);
     return {
       success: true,
       data: response.data,
       status: response.status,
     };
-  } catch (e) {
+  } catch (e: unknown) {
     if (axios.isAxiosError(e)) {
       return {
         success: false,
@@ -98,13 +99,13 @@ const createUser = async (
 
 const getUserApplications = async (): Promise<ApiResponse<IUser[]>> => {
   try {
-    const response = await axios.get(userApi.getUserApplications());
+    const response = await api.get(userApi.getUserApplications());
     return {
       success: true,
       data: response.data,
       status: response.status,
     };
-  } catch (e) {
+  } catch (e: unknown) {
     if (axios.isAxiosError(e)) {
       return {
         success: false,
@@ -127,13 +128,13 @@ const getUserApplications = async (): Promise<ApiResponse<IUser[]>> => {
 
 const approveUser = async (userId: string): Promise<ApiResponse<IUser>> => {
   try {
-    const response = await axios.post(userApi.approveUser(userId));
+    const response = await api.post(userApi.approveUser(userId));
     return {
       success: true,
       data: response.data,
       status: response.status,
     };
-  } catch (e) {
+  } catch (e: unknown) {
     if (axios.isAxiosError(e)) {
       return {
         success: false,
