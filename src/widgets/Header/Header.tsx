@@ -42,7 +42,7 @@ export function Header() {
                 {profile.name}
               </Title>
             )}
-            {profile && (
+            {profile && !profile?.is_admin && (
               <Tag className={styles.taskCount}>
                 Задач: {profile.tasks?.length || 0}
               </Tag>

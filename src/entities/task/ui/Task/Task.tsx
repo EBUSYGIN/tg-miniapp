@@ -65,6 +65,22 @@ export function Task({ task, deadline, executors, id, priority }: TaskProps) {
           {inWork ? <Icon.Checkmark /> : <Icon.Checkminus />}
         </Button>
       </div>
+
+      <div className={styles.executors}>
+        <h4 className={styles.executorsTitle}>Исполнители:</h4>
+        <div className={styles.executorsList}>
+          {executors.map((executor) => (
+            <div key={executor.id} className={styles.executor}>
+              <span className={styles.executorName}>
+                {executor.executor_name} - {executor.executor_rang}
+              </span>
+              {executor.in_work && (
+                <span className={styles.inWorkBadge}>В работе</span>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
     </Card>
   );
 }

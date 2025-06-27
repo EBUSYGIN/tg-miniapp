@@ -52,7 +52,7 @@ export function RegistrationForm() {
           <div>
             <h1 className={styles.title}>Регистрация</h1>
             <p className={styles.subtitle}>
-              Заполните форму для получения доступа к системе управления
+              Зарегистрируйтесь для получения доступа к системе управления
               задачами
             </p>
           </div>

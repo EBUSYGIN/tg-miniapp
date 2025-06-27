@@ -3,6 +3,7 @@ import { Card, Title, Tag } from '../../shared/ui';
 import styles from './ArchiveTasks.module.css';
 import { ITask } from '@/entities/task/types';
 import { taskHandler } from '@/entities/task/handler';
+import { parse } from 'date-fns';
 
 export function ArchiveTasks() {
   const [archivedTasks, setArchivedTasks] = useState<ITask[] | null>(null);
@@ -36,11 +37,18 @@ export function ArchiveTasks() {
     }
   };
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('ru-RU', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-    });
+    if (!dateString) return '-';
+    try {
+      const parsed = parse(dateString, 'dd.MM.yyyy HH:mm', new Date());
+      if (isNaN(parsed.getTime())) return '-';
+      return parsed.toLocaleDateString('ru-RU', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      });
+    } catch {
+      return '-';
+    }
   };
 
   if (!archivedTasks || archivedTasks.length < 1) {
@@ -51,7 +59,7 @@ export function ArchiveTasks() {
           Архив пуст
         </Title>
         <p className={styles.emptyText}>
-          Здесь будут отображаться завершенные задачи
+          Здесь будут отображаться завершённые задачи
         </p>
       </div>
     );
@@ -93,7 +101,7 @@ export function ArchiveTasks() {
                 {task.executors.map((executor) => (
                   <div key={executor.id} className={styles.executor}>
                     <span className={styles.executorName}>
-                      {executor.executor_name}
+                      {executor.executor_name} - {executor.executor_rang}
                     </span>
                     {executor.is_complete && (
                       <span className={styles.completedBadge}>✓ Завершено</span>

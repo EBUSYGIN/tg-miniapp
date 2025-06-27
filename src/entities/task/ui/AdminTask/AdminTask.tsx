@@ -1,17 +1,14 @@
-import { Icon, Title, Tag, Card } from '../../../../shared/ui';
+import { Tag, Card } from '../../../../shared/ui';
 import { TaskProps } from './AdminTask.props';
 import styles from './AdminTask.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../../../app/store/store';
-import { taskHandler } from '../../handler';
-import { getUserById } from '../../../user/model/asyncActions';
+
 import { parse } from 'date-fns';
 
 export function AdminTask({
   task,
   deadline,
   executors,
-  id,
+
   priority,
 }: TaskProps) {
   const date = new Intl.DateTimeFormat('ru-RU', {
@@ -19,19 +16,6 @@ export function AdminTask({
     month: '2-digit',
     year: 'numeric',
   }).format(parse(deadline, 'dd.MM.yyyy HH:mm', new Date()));
-
-  const userId = useSelector((state: RootState) => state.user.userTelegramId);
-  const dispatch = useDispatch<AppDispatch>();
-
-  const inWork = executors.find(
-    (executor) => executor.executor === userId
-  )?.in_work;
-
-  const getInWork = async () => {
-    const response = await taskHandler.getInWork(userId, id);
-    console.log(response);
-    dispatch(getUserById());
-  };
 
   const getPriorityColor = (priority: string) => {
     const normalizedPriority = priority.trim().toLowerCase();
@@ -62,13 +46,6 @@ export function AdminTask({
             <span className={styles.deadline}>Дедлайн: {date}</span>
           </div>
         </div>
-
-        <div
-          onClick={getInWork}
-          className={`${styles.statusButton} ${inWork ? styles.inWork : ''}`}
-        >
-          {inWork ? <Icon.Checkmark /> : <Icon.Checkminus />}
-        </div>
       </div>
 
       <div className={styles.executors}>
@@ -77,7 +54,7 @@ export function AdminTask({
           {executors.map((executor) => (
             <div key={executor.id} className={styles.executor}>
               <span className={styles.executorName}>
-                {executor.executor_name}
+                {executor.executor_name} - {executor.executor_rang}
               </span>
               {executor.in_work && (
                 <span className={styles.inWorkBadge}>В работе</span>
