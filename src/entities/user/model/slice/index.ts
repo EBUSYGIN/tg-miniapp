@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IUserState } from '../../types';
 import { getUserById } from '../asyncActions';
 import { getUserId, getUserImage } from '../../../../shared/lib';
@@ -12,7 +12,14 @@ const initialState: IUserState = {
 export const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    setUserTelegramId: (state, action: PayloadAction<string>) => {
+      state.userTelegramId = action.payload;
+    },
+    setUserImage: (state, action: PayloadAction<string>) => {
+      state.userImage = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getUserById.pending, (state) => {
       state.loadingState = 'loading';
@@ -41,5 +48,5 @@ export const userSlice = createSlice({
   },
 });
 
-export const {} = userSlice.actions;
+export const { setUserTelegramId, setUserImage } = userSlice.actions;
 export default userSlice.reducer;

@@ -12,7 +12,7 @@ export interface IUser {
 export interface IUserState {
   loadingState?: 'loading' | 'error' | 'success';
   isRegistered: boolean | null;
-  userTelegramId: string;
+  userTelegramId: string | null;
   userImage: string | null;
   profile?: IUser;
 }

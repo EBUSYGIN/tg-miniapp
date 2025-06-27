@@ -1,5 +1,4 @@
 import axios from 'axios';
-// Импортируй функцию получения initDataRaw (уточни путь при необходимости)
 import { retrieveRawInitData } from '../lib';
 
 export const API_URL = `${import.meta.env.VITE_API_URL}/api`;
@@ -9,13 +8,15 @@ export const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  const initDataRaw = retrieveRawInitData();
-  if (
-    initDataRaw &&
-    config.headers &&
-    typeof config.headers.set === 'function'
-  ) {
-    config.headers.set('Authorization', `tma ${initDataRaw}`);
+  try {
+    const initDataRaw = retrieveRawInitData();
+
+    if (initDataRaw && initDataRaw.trim() !== '' && config.headers) {
+      config.headers.set('Authorization', `tma ${initDataRaw}`);
+    }
+  } catch (error) {
+    console.error('Ошибка в интерсепторе запроса:', error);
   }
+
   return config;
 });
